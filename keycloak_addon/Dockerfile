@@ -26,13 +26,14 @@ COPY --from=downloader /opt/providers/mariadb-java-client.jar /opt/keycloak/prov
 COPY run.sh /opt/keycloak/run.sh
 
 # Set permissions
-RUN chmod +x /opt/keycloak/run.sh \
-    && chown keycloak:keycloak /opt/keycloak/run.sh \
+RUN chmod +x /run.sh \
+    && chown keycloak:keycloak /run.sh \
     && chown keycloak:keycloak /opt/keycloak/providers/mariadb-java-client.jar
+
+# Entrypoint and expose port
+ENTRYPOINT ["/run.sh"]
 
 # Switch back to keycloak user
 USER keycloak
 
-# Entrypoint and expose port
-ENTRYPOINT ["/opt/keycloak/run.sh"]
 EXPOSE 8080

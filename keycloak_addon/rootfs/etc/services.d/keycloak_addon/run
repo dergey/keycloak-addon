@@ -10,22 +10,27 @@ if ! bashio::services.available 'mysql'; then
     bashio::exit.nok "Please ensure it is installed and started"
 fi
 
-export DB_ADDR=$(bashio::services "mysql" "host")
-export DB_PORT=$(bashio::services "mysql" "port")
-export DB_DATABASE=$(bashio::config 'db_name')
-export DB_USER=$(bashio::config 'db_user')
-export DB_PASSWORD=$(bashio::config 'db_password')
+DB_ADDR=$(bashio::services "mysql" "host")
+DB_PORT=$(bashio::services "mysql" "port")
+DB_DATABASE=$(bashio::config 'db_name')
+DB_USER=$(bashio::config 'db_user')
+DB_PASSWORD=$(bashio::config 'db_password')
 export KEYCLOAK_ADMIN=$(bashio::config 'KEYCLOAK_ADMIN')
 export KEYCLOAK_ADMIN_PASSWORD=$(bashio::config 'KEYCLOAK_ADMIN_PASSWORD')
 
-bashio::log.info "MariaDB: ${DB_USER}@${DB_ADDR}:${DB_PORT}/${DB_DATABASE}"
+# Вычисляем HTTP relative path для Ingress
+ADDON_SLUG=$(bashio::addon.slug)
+REL_PATH="/hassio/ingress/${ADDON_SLUG}/"
+
+bashio::log.info "Using relative path: ${REL_PATH}"
 
 ## Run your program
 exec /opt/keycloak/bin/kc.sh start-dev \
   --proxy-headers=xforwarded \
   --hostname-strict=false \
+  --http-relative-path="${REL_PATH}" \
   --db=mariadb \
-  --db-url=jdbc:mariadb://${DB_ADDR}:${DB_PORT}/${DB_DATABASE} \
-  --db-username=${DB_USER} \
-  --db-password=${DB_PASSWORD} \
+  --db-url=jdbc:mariadb://"${DB_ADDR}":"${DB_PORT}"/"${DB_DATABASE}" \
+  --db-username="${DB_USER}" \
+  --db-password="${DB_PASSWORD}" \
   --features=token-exchange

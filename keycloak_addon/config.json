@@ -2,7 +2,7 @@
   "name": "Keycloak",
   "version": "22.0.5",
   "slug": "keycloak",
-  "description": "Keycloak с интеграцией MariaDB Home Assistant",
+  "description": "Keycloak Identity Provider with MariaDB integration",
   "arch": ["amd64", "armv7", "aarch64"],
   "startup": "application",
   "boot": "auto",
@@ -10,30 +10,35 @@
     "8080/tcp": 8080
   },
   "ports_description": {
-    "8080/tcp": "Keycloak Web-интерфейс"
+    "8080/tcp": "Keycloak web interface"
   },
   "options": {
     "KEYCLOAK_ADMIN": "admin",
     "KEYCLOAK_ADMIN_PASSWORD": "changeme",
     "KC_HOSTNAME": "homeassistant.local",
-    "DB_HOST": "core-mariadb",
-    "DB_PORT": 3306,
-    "DB_NAME": "keycloak",
-    "DB_USER": "keycloak",
-    "DB_PASSWORD": "your_password"
+    "db_host": "core-mariadb",
+    "db_port": 3306,
+    "db_name": "keycloak",
+    "db_user": "keycloak",
+    "db_password": "your_password"
   },
   "schema": {
     "KEYCLOAK_ADMIN": "str",
     "KEYCLOAK_ADMIN_PASSWORD": "str",
     "KC_HOSTNAME": "str?",
-    "DB_HOST": "str",
-    "DB_PORT": "int",
-    "DB_NAME": "str",
-    "DB_USER": "str",
-    "DB_PASSWORD": "str"
+    "db_host": "str",
+    "db_port": "int",
+    "db_name": "str",
+    "db_user": "str",
+    "db_password": "str"
   },
   "map": ["ssl"],
   "init": false,
   "host_network": false,
-  "network": "bridge"
+  "hassio_api": true,
+  "hassio_role": "manager",
+  "homeassistant_api": true,
+  "services": [
+    "mysql:need"
+  ]
 }

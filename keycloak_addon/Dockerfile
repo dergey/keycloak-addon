@@ -11,9 +11,6 @@ RUN apk add --no-cache curl \
 # Stage 3: assemble final image
 FROM quay.io/keycloak/keycloak:24.0.1
 
-# Switch to root to copy files
-USER root
-
 # Copy helper scripts from HA base
 COPY --from=base /usr/bin/with-contenv /usr/bin/with-contenv
 COPY --from=base /usr/bin/bashio /usr/bin/bashio
@@ -21,6 +18,11 @@ COPY --from=base /usr/lib/python3.*/site-packages/bashio /usr/lib/python3.*/site
 
 # Copy MariaDB JDBC driver
 COPY --from=downloader /opt/providers/mariadb-java-client.jar /opt/keycloak/providers/
+
+# Switch to root to copy files
+USER root
+RUN mkdir /data && chown keycloak:keycloak /data
+VOLUME /data
 
 # Copy run script
 COPY run.sh /run.sh

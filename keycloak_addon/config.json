@@ -6,7 +6,7 @@
   "arch": ["amd64", "armv7", "aarch64"],
   "startup": "services",
   "boot": "auto",
-  "map": ["config:rw", "ssl", "share:rw"],
+  "map": ["addon_config", "ssl", "share"],
   "ports": { "8080/tcp": 8080 },
   "options": {
     "db_host": "core_mariadb",
@@ -28,10 +28,9 @@
     "KEYCLOAK_ADMIN": "str",
     "KEYCLOAK_ADMIN_PASSWORD": "str"
   },
-  "services": ["core_mariadb"],
+  "services": ["core_mariadb:need"],
   "ingress": true,
   "ingress_port": 8080,
-  "panel_icon": "mdi:account-key",
-  "panel_title": "Keycloak",
-  "homeassistant_api": false
+  "panel_icon": "mdi:openid",
+  "panel_title": "Keycloak"
 }

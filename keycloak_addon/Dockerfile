@@ -5,7 +5,7 @@ FROM ${BUILD_FROM}
 USER root
 RUN mkdir -p /opt/keycloak/providers && \
     curl -L -o /opt/keycloak/providers/mariadb-java-client.jar \
-    https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/3.1.4/mariadb-java-client-3.1.4.jar
+    https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/3.5.4/mariadb-java-client-3.5.4.jar
 
 # Устанавливаем необходимые утилиты
 RUN microdnf update -y && \

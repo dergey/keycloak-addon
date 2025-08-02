@@ -12,6 +12,10 @@ FROM quay.io/keycloak/keycloak:24.0.1
 # Переходим в root для копирования и прав
 USER root
 
+# Настраиваем рабочую среду
+RUN mkdir /data && chown keycloak:keycloak /data
+VOLUME /data
+
 # Копируем JDBC-драйвер
 COPY --from=downloader /opt/providers/mariadb-java-client.jar /opt/keycloak/providers/
 

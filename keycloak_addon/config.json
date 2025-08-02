@@ -4,9 +4,9 @@
   "slug": "keycloak",
   "description": "Keycloak Identity Provider with MariaDB integration",
   "arch": ["amd64", "armv7", "aarch64"],
-  "startup": "services",
+  "startup": "application",
   "boot": "auto",
-  "map": ["addon_config", "ssl", "share"],
+  "map": ["ssl"],
   "ports": { "8080/tcp": 8080 },
   "options": {
     "db_host": "core_mariadb",
@@ -32,5 +32,6 @@
   "ingress": true,
   "ingress_port": 8080,
   "panel_icon": "mdi:openid",
-  "panel_title": "Keycloak"
+  "panel_title": "Keycloak",
+  "init": false
 }

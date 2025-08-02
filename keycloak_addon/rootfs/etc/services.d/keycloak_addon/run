@@ -28,8 +28,9 @@ export KEYCLOAK_ADMIN_PASSWORD=$(bashio::config 'KEYCLOAK_ADMIN_PASSWORD')
 
 # Вычисляем HTTP relative path для Ingress
 ADDON_SLUG=$(bashio::addon.hostname)
-REL_PATH="/hassio/ingress/${ADDON_SLUG}/"
-
+# Преобразуем дефисы в подчёркивания:
+SANITIZED_SLUG="${ADDON_SLUG//-/_}"
+REL_PATH="/hassio/ingress/${SANITIZED_SLUG}/"
 bashio::log.info "Using relative path: ${REL_PATH}"
 
 ## Run your program

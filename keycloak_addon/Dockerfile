@@ -23,7 +23,7 @@ COPY --from=base /usr/lib/python3.*/site-packages/bashio /usr/lib/python3.*/site
 COPY --from=downloader /opt/providers/mariadb-java-client.jar /opt/keycloak/providers/
 
 # Copy run script
-COPY run.sh /opt/keycloak/run.sh
+COPY run.sh /run.sh
 
 # Set permissions
 RUN chmod +x /run.sh \

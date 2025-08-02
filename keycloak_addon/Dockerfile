@@ -9,10 +9,10 @@ RUN apk add --no-cache \
     netcat-openbsd \
     shadow
 
-# Скачиваем драйвер MariaDB
+# Скачиваем драйвер MariaDB (используем последнюю версию)
 RUN mkdir -p /opt/providers && \
     curl -L -o /opt/providers/mariadb-java-client.jar \
-    https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/3.1.4/mariadb-java-client-3.1.4.jar
+    https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/3.3.2/mariadb-java-client-3.3.2.jar
 
 # Этап 2: Используем официальный образ Keycloak
 FROM quay.io/keycloak/keycloak:22.0.5
@@ -27,13 +27,14 @@ USER root
 RUN mkdir /data && chown keycloak:keycloak /data
 VOLUME /data
 
-# Копируем и настраиваем скрипт запуска (делаем это под root)
+# Копируем и настраиваем скрипт запуска
 COPY run.sh /run.sh
 RUN chmod +x /run.sh && chown keycloak:keycloak /run.sh
+
+# Переопределяем точку входа
+ENTRYPOINT ["/run.sh"]
 
 # Переключаемся на пользователя keycloak
 USER keycloak
 
 EXPOSE 8080
-
-CMD ["/run.sh"]

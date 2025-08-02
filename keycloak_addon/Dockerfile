@@ -1,40 +1,29 @@
-# Этап 1: Используем базовый образ Home Assistant для начальной настройки
-ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:latest
-FROM ${BUILD_FROM} AS builder
+# Этап 1: базовый образ Home Assistant Add-on
+FROM ghcr.io/home-assistant/amd64-base:latest AS base
 
-# Установка необходимых инструментов в базовый образ HA
-RUN apk add --no-cache \
-    curl \
-    jq \
-    netcat-openbsd \
-    shadow
+# Устанавливаем curl, python3 и bashio, скачиваем драйвер MariaDB
+RUN apk add --no-cache curl python3 py3-pip \
+    && pip3 install --no-cache-dir bashio \
+    && mkdir -p /opt/providers \
+    && curl -L -o /opt/providers/mariadb-java-client.jar \
+       https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/3.3.2/mariadb-java-client-3.3.2.jar
 
-# Скачиваем драйвер MariaDB (используем последнюю версию)
-RUN mkdir -p /opt/providers && \
-    curl -L -o /opt/providers/mariadb-java-client.jar \
-    https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/3.3.2/mariadb-java-client-3.3.2.jar
+# Этап 2: официальный образ Keycloak
+FROM quay.io/keycloak/keycloak:24.0.1
 
-# Этап 2: Используем официальный образ Keycloak
-FROM quay.io/keycloak/keycloak:22.0.5
+# Копируем bashio и JDBC-драйвер
+COPY --from=base /usr/local/lib/python3.*/site-packages/bashio /usr/local/lib/python3.*/site-packages/bashio
+COPY --from=base /opt/providers/mariadb-java-client.jar /opt/keycloak/providers/
 
-# Копируем драйвер и утилиты из первого этапа
-COPY --from=builder /opt/providers/mariadb-java-client.jar /opt/keycloak/providers/
-COPY --from=builder /usr/bin/nc /usr/bin/nc
-COPY --from=builder /usr/bin/jq /usr/bin/jq
-
-# Настраиваем рабочую среду
+# Устанавливаем права
 USER root
-RUN mkdir /data && chown keycloak:keycloak /data
-VOLUME /data
+RUN chown keycloak:keycloak /opt/keycloak/providers/mariadb-java-client.jar
 
-# Копируем и настраиваем скрипт запуска
+# Копируем скрипт запуска
 COPY run.sh /run.sh
 RUN chmod +x /run.sh && chown keycloak:keycloak /run.sh
 
-# Переопределяем точку входа
+# Точка входа
 ENTRYPOINT ["/run.sh"]
-
-# Переключаемся на пользователя keycloak
 USER keycloak
-
 EXPOSE 8080

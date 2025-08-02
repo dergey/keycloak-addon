@@ -1,14 +1,13 @@
 #!/usr/bin/with-contenv bashio
 
 set -e
-
 bashio::log.info "== Keycloak Add-on starting =="
 
-# Ждём готовности MariaDB
+# Ждём готовности MariaDB (до 60 сек)
 bashio::log.info "Waiting for MariaDB..."
 bashio::services.wait_for 'mysql' 60
 
-# Читаем конфиг
+# Читаем параметры из конфигурации аддона
 export DB_ADDR=$(bashio::config 'db_host')
 export DB_PORT=$(bashio::config 'db_port')
 export DB_DATABASE=$(bashio::config 'db_name')
@@ -18,9 +17,9 @@ export KEYCLOAK_ADMIN=$(bashio::config 'KEYCLOAK_ADMIN')
 export KEYCLOAK_ADMIN_PASSWORD=$(bashio::config 'KEYCLOAK_ADMIN_PASSWORD')
 export KC_HOSTNAME=$(bashio::config 'KC_HOSTNAME')
 
-# Лог подключения
-bashio::log.info \"MariaDB: ${DB_USER}@${DB_ADDR}:${DB_PORT}/${DB_DATABASE}\"
+bashio::log.info "MariaDB: ${DB_USER}@${DB_ADDR}:${DB_PORT}/${DB_DATABASE}"
 
+# Запуск Keycloak в production-режиме с MariaDB
 exec /opt/keycloak/bin/kc.sh start \
     --proxy=edge \
     --hostname-strict=false \

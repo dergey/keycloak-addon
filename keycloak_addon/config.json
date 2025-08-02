@@ -29,6 +29,8 @@
     "KEYCLOAK_ADMIN_PASSWORD": "str"
   },
   "services": ["mysql:need"],
+  "ingress": true,
+  "ingress_port": 8080,
   "panel_icon": "mdi:openid",
   "panel_title": "Keycloak",
   "init": false

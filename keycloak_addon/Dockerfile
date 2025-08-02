@@ -12,21 +12,18 @@ FROM quay.io/keycloak/keycloak:24.0.1
 # Переходим в root для копирования и прав
 USER root
 
-# Настраиваем рабочую среду
-RUN mkdir /data && chown keycloak:keycloak /data
-VOLUME /data
-
 # Копируем JDBC-драйвер
 COPY --from=downloader /opt/providers/mariadb-java-client.jar /opt/keycloak/providers/
 
 # Копируем скрипт запуска и даём права
-COPY run.sh /run.sh
-RUN chmod +x /run.sh && chown keycloak:keycloak /run.sh \
+COPY run.sh /opt/keycloak/run.sh
+RUN chmod +x /opt/keycloak/run.sh \
+    && chown keycloak:keycloak /opt/keycloak/run.sh \
     && chown keycloak:keycloak /opt/keycloak/providers/mariadb-java-client.jar
 
 # Возвращаем пользователя keycloak
 USER keycloak
 
 # Точка входа и порт
-ENTRYPOINT ["/run.sh"]
+ENTRYPOINT ["/opt/keycloak/run.sh"]
 EXPOSE 8080

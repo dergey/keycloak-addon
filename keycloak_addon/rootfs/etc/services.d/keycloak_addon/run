@@ -22,7 +22,7 @@ export KC_HOSTNAME=keycloak.local
 bashio::log.info "MariaDB: ${DB_USER}@${DB_ADDR}:${DB_PORT}/${DB_DATABASE}"
 
 ## Run your program
-exec /opt/keycloak/bin/kc.sh start \
+exec /opt/keycloak/bin/kc.sh start-dev \
   --proxy-headers=xforwarded \
   --hostname-strict=false \
   ${KC_HOSTNAME:+--hostname=${KC_HOSTNAME}} \

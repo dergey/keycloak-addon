@@ -23,10 +23,9 @@ bashio::log.info "MariaDB: ${DB_USER}@${DB_ADDR}:${DB_PORT}/${DB_DATABASE}"
 
 ## Run your program
 exec /opt/keycloak/bin/kc.sh start \
-  --proxy=edge \
+  --proxy-headers \
   --hostname-strict=false \
   ${KC_HOSTNAME:+--hostname=${KC_HOSTNAME}} \
-  --http-relative-path=/auth \
   --db=mariadb \
   --db-url=jdbc:mariadb://${DB_ADDR}:${DB_PORT}/${DB_DATABASE} \
   --db-username=${DB_USER} \

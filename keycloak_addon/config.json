@@ -12,7 +12,6 @@
     "db_name": "keycloak",
     "db_user": "keycloak",
     "db_password": "secret",
-    "KC_HOSTNAME": "",
     "KEYCLOAK_ADMIN": "admin",
     "KEYCLOAK_ADMIN_PASSWORD": "admin"
   },
@@ -20,7 +19,6 @@
     "db_name": "str",
     "db_user": "str",
     "db_password": "str",
-    "KC_HOSTNAME": "str",
     "KEYCLOAK_ADMIN": "str",
     "KEYCLOAK_ADMIN_PASSWORD": "str"
   },

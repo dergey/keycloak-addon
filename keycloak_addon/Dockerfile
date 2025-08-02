@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base:stable
+ARG BUILD_FROM=ghcr.io/hassio-addons/base:18.0.2
 FROM ${BUILD_FROM}
 
 # Устанавливаем Java и curl

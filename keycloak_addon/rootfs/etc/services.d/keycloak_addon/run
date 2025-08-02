@@ -17,7 +17,6 @@ export DB_USER=$(bashio::config 'db_user')
 export DB_PASSWORD=$(bashio::config 'db_password')
 export KEYCLOAK_ADMIN=$(bashio::config 'KEYCLOAK_ADMIN')
 export KEYCLOAK_ADMIN_PASSWORD=$(bashio::config 'KEYCLOAK_ADMIN_PASSWORD')
-export KC_HOSTNAME=keycloak.local
 
 bashio::log.info "MariaDB: ${DB_USER}@${DB_ADDR}:${DB_PORT}/${DB_DATABASE}"
 
@@ -25,7 +24,6 @@ bashio::log.info "MariaDB: ${DB_USER}@${DB_ADDR}:${DB_PORT}/${DB_DATABASE}"
 exec /opt/keycloak/bin/kc.sh start-dev \
   --proxy-headers=xforwarded \
   --hostname-strict=false \
-  ${KC_HOSTNAME:+--hostname=${KC_HOSTNAME}} \
   --db=mariadb \
   --db-url=jdbc:mariadb://${DB_ADDR}:${DB_PORT}/${DB_DATABASE} \
   --db-username=${DB_USER} \

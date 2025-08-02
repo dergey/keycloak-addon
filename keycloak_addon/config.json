@@ -2,7 +2,7 @@
   "name": "Keycloak",
   "version": "22.0.5",
   "slug": "keycloak",
-  "description": "Keycloak Identity Provider with MariaDB integration",
+  "description": "Keycloak с интеграцией MariaDB Home Assistant",
   "arch": ["amd64", "armv7", "aarch64"],
   "startup": "application",
   "boot": "auto",
@@ -10,34 +10,30 @@
     "8080/tcp": 8080
   },
   "ports_description": {
-    "8080/tcp": "Keycloak web interface"
+    "8080/tcp": "Keycloak Web-интерфейс"
   },
   "options": {
     "KEYCLOAK_ADMIN": "admin",
     "KEYCLOAK_ADMIN_PASSWORD": "changeme",
-    "KC_HOSTNAME": "homeassistant.local",
+    "KC_HOSTNAME": "keycloak.local",
     "DB_VENDOR": "mariadb",
     "DB_ADDR": "core-mariadb",
     "DB_PORT": 3306,
     "DB_DATABASE": "keycloak",
     "DB_USER": "keycloak",
-    "DB_PASSWORD": "your_secure_password"
+    "DB_PASSWORD": "secret_password"
   },
   "schema": {
     "KEYCLOAK_ADMIN": "str",
     "KEYCLOAK_ADMIN_PASSWORD": "str",
-    "KC_HOSTNAME": "str?",
+    "KC_HOSTNAME": "str",
     "DB_VENDOR": "list(mysql|postgres|mariadb)",
     "DB_ADDR": "str",
     "DB_PORT": "int",
     "DB_DATABASE": "str",
-    "DB_USER": "str?",
+    "DB_USER": "str",
     "DB_PASSWORD": "str"
   },
   "map": ["ssl"],
-  "backup": {
-    "folders": ["/data"]
-  },
-  "init": false,
-  "host_network": false
+  "init": false
 }

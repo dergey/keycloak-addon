@@ -2,6 +2,11 @@
 
 set -e
 bashio::log.info "== Keycloak Add-on starting =="
+bashio::log.info "Port: $(bashio::addon.port)"
+bashio::log.info "Ingress Port: $(bashio::addon.ingress_port)"
+bashio::log.info "Ingress Entry: $(bashio::addon.ingress_entry)"
+bashio::log.info "IP Address: $(bashio::ip_address)"
+bashio::log.info "=============================="
 
 # Wait for MariaDB
 bashio::log.info "Looking for MariaDB..."

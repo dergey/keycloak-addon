@@ -4,10 +4,12 @@ set -e
 bashio::log.info "== Keycloak Add-on starting =="
 
 # Wait for MariaDB
-bashio::log.info "Waiting for MariaDB..."
-bashio::services.wait_for 'mysql' 60
+bashio::log.info "Looking for MariaDB..."
+if ! bashio::services.available 'mysql'; then
+    bashio::log.fatal "Local database access should be provided by the MariaDB addon"
+    bashio::exit.nok "Please ensure it is installed and started"
+fi
 
-# Read config values
 export DB_ADDR=$(bashio::config 'db_host')
 export DB_PORT=$(bashio::config 'db_port')
 export DB_DATABASE=$(bashio::config 'db_name')
@@ -19,14 +21,14 @@ export KC_HOSTNAME=$(bashio::config 'KC_HOSTNAME')
 
 bashio::log.info "MariaDB: ${DB_USER}@${DB_ADDR}:${DB_PORT}/${DB_DATABASE}"
 
-# Start Keycloak
+## Run your program
 exec /opt/keycloak/bin/kc.sh start \
-    --proxy=edge \
-    --hostname-strict=false \
-    ${KC_HOSTNAME:+--hostname=${KC_HOSTNAME}} \
-    --http-relative-path=/auth \
-    --db=mariadb \
-    --db-url=jdbc:mariadb://${DB_ADDR}:${DB_PORT}/${DB_DATABASE} \
-    --db-username=${DB_USER} \
-    --db-password=${DB_PASSWORD} \
-    --features=token-exchange
+  --proxy=edge \
+  --hostname-strict=false \
+  ${KC_HOSTNAME:+--hostname=${KC_HOSTNAME}} \
+  --http-relative-path=/auth \
+  --db=mariadb \
+  --db-url=jdbc:mariadb://${DB_ADDR}:${DB_PORT}/${DB_DATABASE} \
+  --db-username=${DB_USER} \
+  --db-password=${DB_PASSWORD} \
+  --features=token-exchange

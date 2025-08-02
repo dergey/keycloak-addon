@@ -10,14 +10,14 @@ if ! bashio::services.available 'mysql'; then
     bashio::exit.nok "Please ensure it is installed and started"
 fi
 
-export DB_ADDR=$(bashio::config 'db_host')
-export DB_PORT=$(bashio::config 'db_port')
+export DB_ADDR=$(bashio::services "mysql" "host")
+export DB_PORT=$(bashio::services "mysql" "port")
 export DB_DATABASE=$(bashio::config 'db_name')
 export DB_USER=$(bashio::config 'db_user')
 export DB_PASSWORD=$(bashio::config 'db_password')
 export KEYCLOAK_ADMIN=$(bashio::config 'KEYCLOAK_ADMIN')
 export KEYCLOAK_ADMIN_PASSWORD=$(bashio::config 'KEYCLOAK_ADMIN_PASSWORD')
-export KC_HOSTNAME=$(bashio::config 'KC_HOSTNAME')
+export KC_HOSTNAME=keycloak.local
 
 bashio::log.info "MariaDB: ${DB_USER}@${DB_ADDR}:${DB_PORT}/${DB_DATABASE}"
 

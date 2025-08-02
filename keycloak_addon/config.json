@@ -9,8 +9,6 @@
   "map": ["ssl"],
   "ports": { "8080/tcp": 8080 },
   "options": {
-    "db_host": "core_mariadb",
-    "db_port": 3306,
     "db_name": "keycloak",
     "db_user": "keycloak",
     "db_password": "secret",
@@ -19,8 +17,6 @@
     "KEYCLOAK_ADMIN_PASSWORD": "admin"
   },
   "schema": {
-    "db_host": "str",
-    "db_port": "int",
     "db_name": "str",
     "db_user": "str",
     "db_password": "str",

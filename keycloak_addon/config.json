@@ -28,7 +28,7 @@
     "KEYCLOAK_ADMIN": "str",
     "KEYCLOAK_ADMIN_PASSWORD": "str"
   },
-  "services": ["mariadb:need"],
+  "services": ["mysql:need"],
   "panel_icon": "mdi:openid",
   "panel_title": "Keycloak",
   "init": false

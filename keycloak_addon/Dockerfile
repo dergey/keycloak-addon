@@ -1,29 +1,21 @@
-# Этап 1: базовый образ Home Assistant Add-on
-FROM ghcr.io/home-assistant/amd64-base:latest AS base
+# Этап 1: скачиваем JDBC-драйвер MariaDB
+FROM alpine:3.20 AS downloader
 
-# Устанавливаем curl, python3 и bashio, скачиваем драйвер MariaDB
-RUN apk add --no-cache curl python3 py3-pip \
-    && pip3 install --no-cache-dir bashio \
-    && mkdir -p /opt/providers \
-    && curl -L -o /opt/providers/mariadb-java-client.jar \
-       https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/3.3.2/mariadb-java-client-3.3.2.jar
+RUN apk add --no-cache curl \
+ && mkdir -p /opt/providers \
+ && curl -L -o /opt/providers/mariadb-java-client.jar \
+      https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/3.3.2/mariadb-java-client-3.3.2.jar
 
-# Этап 2: официальный образ Keycloak
+# Этап 2: официальный Keycloak образ
 FROM quay.io/keycloak/keycloak:24.0.1
 
-# Копируем bashio и JDBC-драйвер
-COPY --from=base /usr/local/lib/python3.*/site-packages/bashio /usr/local/lib/python3.*/site-packages/bashio
-COPY --from=base /opt/providers/mariadb-java-client.jar /opt/keycloak/providers/
-
-# Устанавливаем права
-USER root
-RUN chown keycloak:keycloak /opt/keycloak/providers/mariadb-java-client.jar
+# Копируем драйвер MariaDB
+COPY --from=downloader /opt/providers/mariadb-java-client.jar /opt/keycloak/providers/
 
 # Копируем скрипт запуска
 COPY run.sh /run.sh
-RUN chmod +x /run.sh && chown keycloak:keycloak /run.sh
+RUN chmod +x /run.sh
 
-# Точка входа
-ENTRYPOINT ["/run.sh"]
 USER keycloak
+ENTRYPOINT ["/run.sh"]
 EXPOSE 8080

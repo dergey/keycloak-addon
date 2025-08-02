@@ -15,25 +15,25 @@
   "options": {
     "KEYCLOAK_ADMIN": "admin",
     "KEYCLOAK_ADMIN_PASSWORD": "changeme",
-    "KC_HOSTNAME": "keycloak.local",
-    "DB_VENDOR": "mariadb",
-    "DB_ADDR": "core-mariadb",
+    "KC_HOSTNAME": "homeassistant.local",
+    "DB_HOST": "core-mariadb",
     "DB_PORT": 3306,
-    "DB_DATABASE": "keycloak",
+    "DB_NAME": "keycloak",
     "DB_USER": "keycloak",
-    "DB_PASSWORD": "secret_password"
+    "DB_PASSWORD": "your_password"
   },
   "schema": {
     "KEYCLOAK_ADMIN": "str",
     "KEYCLOAK_ADMIN_PASSWORD": "str",
-    "KC_HOSTNAME": "str",
-    "DB_VENDOR": "list(mysql|postgres|mariadb)",
-    "DB_ADDR": "str",
+    "KC_HOSTNAME": "str?",
+    "DB_HOST": "str",
     "DB_PORT": "int",
-    "DB_DATABASE": "str",
+    "DB_NAME": "str",
     "DB_USER": "str",
     "DB_PASSWORD": "str"
   },
   "map": ["ssl"],
-  "init": false
+  "init": false,
+  "host_network": false,
+  "network": "bridge"
 }

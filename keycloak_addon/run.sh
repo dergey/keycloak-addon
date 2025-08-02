@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# Вывод всех переменных окружения для отладки
+echo "===== Environment Variables ====="
+printenv
+echo "================================="
+
+# Проверка обязательных переменных
+if [ -z "${DB_HOST}" ] || [ -z "${DB_PORT}" ] || [ -z "${DB_NAME}" ] || [ -z "${DB_PASSWORD}" ]; then
+    echo "ERROR: Database configuration is incomplete!"
+    echo "DB_HOST=${DB_HOST}, DB_PORT=${DB_PORT}, DB_NAME=${DB_NAME}, DB_PASSWORD=${DB_PASSWORD}"
+    exit 1
+fi
+
 # Проверка наличия драйвера MariaDB
 if [ ! -f /opt/keycloak/providers/mariadb-java-client.jar ]; then
     echo "ERROR: MariaDB driver not found in /opt/keycloak/providers/"

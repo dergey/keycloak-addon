@@ -27,7 +27,7 @@ bashio::log.info "Using relative path: ${REL_PATH}"
 exec /opt/keycloak/bin/kc.sh start-dev \
   --proxy-headers=xforwarded \
   --hostname-strict=false \
-  --http-relative-path="${REL_PATH}" \
+  --http-relative-path=/hassio/ingress/7a679d46_keycloak/ \
   --db=mariadb \
   --db-url=jdbc:mariadb://"${DB_ADDR}":"${DB_PORT}"/"${DB_DATABASE}" \
   --db-username="${DB_USER}" \

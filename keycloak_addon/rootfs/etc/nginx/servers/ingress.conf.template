@@ -8,8 +8,7 @@ server {
 
     location / {
         proxy_pass         http://127.0.0.1:8080/;
-        proxy_redirect     http://127.0.0.1:8080/ __INGRESS_ENTRY__;
-        proxy_redirect     http://192.168.1.70:8123/ http://192.168.1.70:8123__INGRESS_ENTRY__/;
+        proxy_redirect     http://$http_host/ $scheme://$http_host__INGRESS_ENTRY__/;
 
         proxy_set_header   Host $host;
         proxy_set_header   Upgrade $http_upgrade;

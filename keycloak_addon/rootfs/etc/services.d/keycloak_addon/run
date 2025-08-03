@@ -2,14 +2,6 @@
 
 set -e
 bashio::log.info "== Keycloak Add-on starting =="
-bashio::log.info "Port: $(bashio::addon.hostname)"
-bashio::log.info "Port: $(bashio::addon.port)"
-bashio::log.info "Ingress Port: $(bashio::addon.ingress_port)"
-bashio::log.info "Ingress Entry: $(bashio::addon.ingress_entry)"
-bashio::log.info "IP Address: $(bashio::ip_address)"
-bashio::log.info "IP Address: $(bashio::addon.url)"
-bashio::log.info "Slug: $(bashio::config 'slug')"
-bashio::log.info "=============================="
 
 # Wait for MariaDB
 bashio::log.info "Looking for MariaDB..."
@@ -26,8 +18,9 @@ DB_PASSWORD=$(bashio::config 'db_password')
 export KEYCLOAK_ADMIN=$(bashio::config 'KEYCLOAK_ADMIN')
 export KEYCLOAK_ADMIN_PASSWORD=$(bashio::config 'KEYCLOAK_ADMIN_PASSWORD')
 
-# Вычисляем HTTP relative path для Ingress
-REL_PATH=$(bashio::config 'ingress_root')
+ADDON_HOSTNAME=$(bashio::addon.hostname)
+SANITIZED_SLUG="${ADDON_HOSTNAME//-/_}"
+REL_PATH="/hassio/ingress/${SANITIZED_SLUG}/"
 bashio::log.info "Using relative path: ${REL_PATH}"
 
 ## Run your program

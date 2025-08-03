@@ -1,18 +1,16 @@
 server {
     listen 0.0.0.0:8099 default_server;
-    include /etc/nginx/includes/server_params.conf;
-    include /etc/nginx/includes/proxy_params.conf;
-    client_max_body_size 0;
-    server_name keycloak.*;
-    access_log /var/log/nginx/access.log;
+    server_name _;
 
-    proxy_buffering off;
+    access_log  /var/log/nginx/access.log;
+
+    proxy_buffering    off;
     proxy_intercept_errors on;
-    recursive_error_pages on;
+    recursive_error_pages  on;
 
     location / {
         proxy_pass         http://127.0.0.1:8080/;
-        proxy_redirect     http://127.0.0.1:8080/ $scheme://$http_host/;
+        proxy_redirect     http://127.0.0.1:8080/ $scheme://$http_host/__INGRESS_ENTRY__;
 
         proxy_set_header   Host $host;
         proxy_set_header   Upgrade $http_upgrade;

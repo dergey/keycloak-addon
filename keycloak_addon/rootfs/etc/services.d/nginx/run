@@ -1,11 +1,20 @@
 #!/usr/bin/with-contenv bashio
 # shellcheck shell=bash
 set -e
-# ==============================================================================
 
-# Wait for transmission to become available
-bashio::net.wait_for 8080 localhost 900
+# Ждем Keycloak
+bashio::net.wait_for 8080 localhost 60
 
+# Получаем ingress path
+INGRESS_ENTRY=$(bashio::addon.ingress_entry)
+
+# Подставляем в конфиг
+TEMPLATE_PATH="/etc/nginx/servers/ingress.conf.template"
+OUTPUT_PATH="/etc/nginx/servers/ingress.conf"
+
+bashio::log.info "Rendering NGINX ingress.conf with ingress entry: $INGRESS_ENTRY"
+sed "s|__INGRESS_ENTRY__|$INGRESS_ENTRY|g" "$TEMPLATE_PATH" > "$OUTPUT_PATH"
+
+# Стартуем nginx
 bashio::log.info "Starting NGINX..."
-
 exec nginx

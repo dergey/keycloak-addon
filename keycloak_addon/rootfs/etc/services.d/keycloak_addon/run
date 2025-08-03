@@ -18,16 +18,10 @@ DB_PASSWORD=$(bashio::config 'db_password')
 export KEYCLOAK_ADMIN=$(bashio::config 'KEYCLOAK_ADMIN')
 export KEYCLOAK_ADMIN_PASSWORD=$(bashio::config 'KEYCLOAK_ADMIN_PASSWORD')
 
-ADDON_HOSTNAME=$(bashio::addon.hostname)
-SANITIZED_SLUG="${ADDON_HOSTNAME//-/_}"
-REL_PATH="/hassio/ingress/${SANITIZED_SLUG}/"
-bashio::log.info "Using relative path: ${REL_PATH}"
-
 ## Run your program
 exec /opt/keycloak/bin/kc.sh start-dev \
   --proxy-headers=xforwarded \
   --hostname-strict=false \
-  --http-relative-path=/hassio/ingress/7a679d46_keycloak/ \
   --db=mariadb \
   --db-url=jdbc:mariadb://"${DB_ADDR}":"${DB_PORT}"/"${DB_DATABASE}" \
   --db-username="${DB_USER}" \

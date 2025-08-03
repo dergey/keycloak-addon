@@ -7,7 +7,7 @@
   "startup": "application",
   "boot": "auto",
   "map": ["ssl"],
-  "ports": { "8080/tcp": null },
+  "ports": { "8080/tcp": 8080 },
   "options": {
     "db_name": "keycloak",
     "db_user": "keycloak",
@@ -23,9 +23,6 @@
     "KEYCLOAK_ADMIN_PASSWORD": "str"
   },
   "services": ["mysql:need"],
-  "ingress": true,
-  "ingress_port": 8080,
-  "ingress_entry": "/hassio/ingress/7a679d46_keycloak/",
   "panel_icon": "mdi:openid",
   "panel_title": "Keycloak",
   "init": false

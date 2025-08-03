@@ -8,7 +8,7 @@ COPY rootfs /
 RUN apk add --no-cache openjdk17 nginx curl
 
 # Устанавливаем Keycloak
-ENV KC_VERSION=24.0.1
+ENV KC_VERSION=26.3.2
 RUN curl -L -o /tmp/keycloak.tar.gz https://github.com/keycloak/keycloak/releases/download/${KC_VERSION}/keycloak-${KC_VERSION}.tar.gz && \
     mkdir -p /opt/keycloak && \
     tar -xzf /tmp/keycloak.tar.gz -C /opt/keycloak --strip-components=1 && \
@@ -17,7 +17,7 @@ RUN curl -L -o /tmp/keycloak.tar.gz https://github.com/keycloak/keycloak/release
 # Устанавливаем MariaDB драйвер
 RUN mkdir -p /opt/keycloak/providers && \
     curl -L -o /opt/keycloak/providers/mariadb-java-client.jar \
-    https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/3.3.2/mariadb-java-client-3.3.2.jar
+    https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/3.5.4/mariadb-java-client-3.5.4.jar
 
 # Создаём директорию для NGINX runtime/logging
 RUN mkdir -p /run/nginx

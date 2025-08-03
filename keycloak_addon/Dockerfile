@@ -4,7 +4,7 @@ FROM $BUILD_FROM
 # Copy root filesystem
 COPY rootfs /
 
-# Устанавливаем Java и curl
+# Устанавливаем Java17, Nginx и curl
 RUN apk add --no-cache openjdk17 nginx curl
 
 # Устанавливаем Keycloak
@@ -18,3 +18,6 @@ RUN curl -L -o /tmp/keycloak.tar.gz https://github.com/keycloak/keycloak/release
 RUN mkdir -p /opt/keycloak/providers && \
     curl -L -o /opt/keycloak/providers/mariadb-java-client.jar \
     https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/3.3.2/mariadb-java-client-3.3.2.jar
+
+# Создаём директорию для NGINX runtime
+RUN mkdir -p /run/nginx

@@ -5,7 +5,7 @@ FROM $BUILD_FROM
 COPY rootfs /
 
 # Устанавливаем Java и curl
-RUN apk add --no-cache openjdk17 curl
+RUN apk add --no-cache openjdk17 nginx curl
 
 # Устанавливаем Keycloak
 ENV KC_VERSION=24.0.1

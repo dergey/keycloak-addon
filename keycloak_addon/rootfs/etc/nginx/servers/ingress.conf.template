@@ -13,6 +13,7 @@ server {
         sub_filter_once off;
         sub_filter_types text/html text/css application/javascript;
         sub_filter '/resources/' '__INGRESS_ENTRY__/resources/';
+        sub_filter '/realms/' '__INGRESS_ENTRY__/realms/';
         sub_filter 'href="/' 'href="__INGRESS_ENTRY__/';
         sub_filter 'src="/' 'src="__INGRESS_ENTRY__/';
 

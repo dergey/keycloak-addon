@@ -25,7 +25,7 @@
   "services": ["mysql:need"],
   "ingress": true,
   "ingress_port": 8080,
-  "ingress_root": "/hassio/ingress/7a679d46_keycloak/",
+  "ingress_entry": "/hassio/ingress/7a679d46_keycloak/",
   "panel_icon": "mdi:openid",
   "panel_title": "Keycloak",
   "init": false

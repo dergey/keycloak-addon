@@ -21,3 +21,6 @@ RUN mkdir -p /opt/keycloak/providers && \
 
 # Создаём директорию для NGINX runtime
 RUN mkdir -p /run/nginx
+
+# Ensure all run scripts are executable
+RUN find /etc/services.d/ -name 'run' -exec chmod +x {} \;

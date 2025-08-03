@@ -25,5 +25,6 @@
   "services": ["mysql:need"],
   "panel_icon": "mdi:openid",
   "panel_title": "Keycloak",
-  "init": false
+  "init": false,
+  "webui": "[PROTO:ssl]://[HOST]:[PORT:8080]"
 }

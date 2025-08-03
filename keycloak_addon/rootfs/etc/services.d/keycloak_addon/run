@@ -27,16 +27,14 @@ export KEYCLOAK_ADMIN=$(bashio::config 'KEYCLOAK_ADMIN')
 export KEYCLOAK_ADMIN_PASSWORD=$(bashio::config 'KEYCLOAK_ADMIN_PASSWORD')
 
 # Вычисляем HTTP relative path для Ingress
-ADDON_SLUG=$(bashio::addon.hostname)
-# Преобразуем дефисы в подчёркивания:
-SANITIZED_SLUG="${ADDON_SLUG//-/_}"
-REL_PATH="/hassio/ingress/${SANITIZED_SLUG}/"
+REL_PATH=$(bashio::config 'ingress_root')
 bashio::log.info "Using relative path: ${REL_PATH}"
 
 ## Run your program
 exec /opt/keycloak/bin/kc.sh start-dev \
   --proxy-headers=xforwarded \
   --hostname-strict=false \
+  --http-relative-path="${REL_PATH}" \
   --db=mariadb \
   --db-url=jdbc:mariadb://"${DB_ADDR}":"${DB_PORT}"/"${DB_DATABASE}" \
   --db-username="${DB_USER}" \

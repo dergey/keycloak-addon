@@ -19,8 +19,9 @@ RUN mkdir -p /opt/keycloak/providers && \
     curl -L -o /opt/keycloak/providers/mariadb-java-client.jar \
     https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/3.3.2/mariadb-java-client-3.3.2.jar
 
-# Создаём директорию для NGINX runtime
+# Создаём директорию для NGINX runtime/logging
 RUN mkdir -p /run/nginx
+RUN mkdir -p /var/log/nginx/
 
 # Ensure all run scripts are executable
 RUN find /etc/services.d/ -name 'run' -exec chmod +x {} \;

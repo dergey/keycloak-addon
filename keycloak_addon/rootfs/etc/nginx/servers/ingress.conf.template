@@ -17,6 +17,12 @@ server {
         sub_filter 'href="/' 'href="__INGRESS_ENTRY__/';
         sub_filter 'src="/' 'src="__INGRESS_ENTRY__/';
 
+        sub_filter '"/protocol/openid-connect' '"__INGRESS_ENTRY__/protocol/openid-connect';
+        sub_filter "'/protocol/openid-connect" "'__INGRESS_ENTRY__/protocol/openid-connect";
+
+        sub_filter 'w() + "/' 'w() + "__INGRESS_ENTRY__/';
+        sub_filter 'var le = "/' 'var le = "__INGRESS_ENTRY__/';
+
         proxy_set_header   Host $host;
         proxy_set_header   Upgrade $http_upgrade;
         proxy_set_header   Connection $connection_upgrade;

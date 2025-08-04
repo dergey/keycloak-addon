@@ -8,7 +8,7 @@ server {
 
     location / {
         proxy_pass         http://127.0.0.1:8080/;
-        proxy_redirect     ~^https?:\/\/([^:]+)(:[0-9]+)?\/(.*) $scheme://$http_host:$server_port/__INGRESS_ENTRY__/$3;
+        proxy_redirect     http://$http_host/ $scheme://$http_host/__INGRESS_ENTRY__/;
 
         sub_filter_once off;
         sub_filter_types text/html text/css text/plain text/javascript application/javascript;

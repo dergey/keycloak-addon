@@ -17,8 +17,8 @@ server {
         sub_filter 'href="/' 'href="/__INGRESS_ENTRY__/';
         sub_filter 'src="/' 'src="/__INGRESS_ENTRY__/';
 
-        sub_filter 'authServerUrl + "/realms' 'authServerUrl + "/__INGRESS_ENTRY__/realms';
-        sub_filter 'authServerUrl + "realms' 'authServerUrl + "__INGRESS_ENTRY__/realms';
+        sub_filter 'authServerUrl+"/realms' 'authServerUrl+"/__INGRESS_ENTRY__/realms';
+        sub_filter 'authServerUrl+"realms' 'authServerUrl+"__INGRESS_ENTRY__/realms';
 
         proxy_set_header   Host $host;
         proxy_set_header   Upgrade $http_upgrade;

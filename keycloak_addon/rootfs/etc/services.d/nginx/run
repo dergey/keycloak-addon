@@ -6,7 +6,7 @@ set -e
 bashio::net.wait_for 8080 localhost 60
 
 # Получаем ingress path
-INGRESS_ENTRY=$(bashio::addon.ingress_entry)
+INGRESS_ENTRY="$(bashio::addon.ingress_entry | sed 's|^/||')"
 
 # Подставляем в конфиг
 TEMPLATE_PATH="/etc/nginx/servers/ingress.conf.template"

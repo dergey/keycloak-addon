@@ -12,15 +12,13 @@ server {
 
         sub_filter_once off;
         sub_filter_types text/html text/css text/plain text/javascript application/javascript;
+
         sub_filter '/resources/' '__INGRESS_ENTRY__/resources/';
         sub_filter 'href="/' 'href="__INGRESS_ENTRY__/';
         sub_filter 'src="/' 'src="__INGRESS_ENTRY__/';
 
-        sub_filter '"/protocol/openid-connect' '"__INGRESS_ENTRY__/protocol/openid-connect';
-        sub_filter "'/protocol/openid-connect" "'__INGRESS_ENTRY__/protocol/openid-connect";
-
-        sub_filter 'w() + "/' 'w() + "__INGRESS_ENTRY__/';
-        sub_filter 'var le = "/' 'var le = "__INGRESS_ENTRY__/';
+        sub_filter 't.authServerUrl + "/'   't.authServerUrl + "__INGRESS_ENTRY__/';
+        sub_filter 't.authServerUrl.charAt' 't.authServerUrl.replace(/\/$/, "") + "__INGRESS_ENTRY__/";  //';
 
         proxy_set_header   Host $host;
         proxy_set_header   Upgrade $http_upgrade;

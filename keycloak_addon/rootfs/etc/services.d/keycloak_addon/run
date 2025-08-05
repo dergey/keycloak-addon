@@ -23,6 +23,7 @@ export KEYCLOAK_ADMIN_PASSWORD=$(bashio::config 'KEYCLOAK_ADMIN_PASSWORD')
 ## Run your program
 exec /opt/keycloak/bin/kc.sh start-dev \
   --hostname-strict=false \
+  --proxy-headers=xforwarded \
   --http-relative-path="${RELATIVE_PATH}" \
   --db=mariadb \
   --db-url=jdbc:mariadb://"${DB_ADDR}":"${DB_PORT}"/"${DB_DATABASE}" \

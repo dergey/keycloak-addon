@@ -15,12 +15,15 @@ DB_PORT=$(bashio::services "mysql" "port")
 DB_DATABASE=$(bashio::config 'db_name')
 DB_USER=$(bashio::config 'db_user')
 DB_PASSWORD=$(bashio::config 'db_password')
+RELATIVE_PATH=$(bashio::addon.ingress_entry)
+
 export KEYCLOAK_ADMIN=$(bashio::config 'KEYCLOAK_ADMIN')
 export KEYCLOAK_ADMIN_PASSWORD=$(bashio::config 'KEYCLOAK_ADMIN_PASSWORD')
 
 ## Run your program
 exec /opt/keycloak/bin/kc.sh start-dev \
   --hostname-strict=false \
+  --http-relative-path="${RELATIVE_PATH}" \
   --db=mariadb \
   --db-url=jdbc:mariadb://"${DB_ADDR}":"${DB_PORT}"/"${DB_DATABASE}" \
   --db-username="${DB_USER}" \

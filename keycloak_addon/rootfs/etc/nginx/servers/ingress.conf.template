@@ -18,6 +18,8 @@ server {
 
         sub_filter 'authServerUrl+"/realms' 'authServerUrl+"/__INGRESS_ENTRY__/realms';
         sub_filter 'authServerUrl+"realms' 'authServerUrl+"__INGRESS_ENTRY__/realms';
+        sub_filter '"resourceUrl": "/resources/' '"resourceUrl": "__INGRESS_ENTRY__/resources/';
+        sub_filter '"consoleBaseUrl": "/admin/' '"consoleBaseUrl": "__INGRESS_ENTRY__/admin/';
 
         proxy_set_header   Host $host;
         proxy_set_header   Upgrade $http_upgrade;

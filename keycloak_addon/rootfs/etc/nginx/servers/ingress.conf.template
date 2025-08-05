@@ -2,14 +2,18 @@ server {
     listen 0.0.0.0:8099 default_server;
     server_name _;
 
-    proxy_buffering        off;
+    proxy_buffering         off;
+    proxy_request_buffering off;
     proxy_intercept_errors  on;
     recursive_error_pages   on;
 
     location / {
         proxy_pass         http://127.0.0.1:8080/__INGRESS_ENTRY__/;
 
-        proxy_cookie_path  ~^/api/hassio_ingress/[^/]+ /;
+        proxy_hide_header Set-Cookie;
+        add_header Set-Cookie $keycloak_super_session;
+
+        proxy_set_header Cookie $keycloak_multiple_cookies;
 
         proxy_set_header   Host $host;
         proxy_set_header   Upgrade $http_upgrade;

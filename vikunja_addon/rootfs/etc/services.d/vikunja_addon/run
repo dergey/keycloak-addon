@@ -18,7 +18,7 @@ chown -R 1000 "${files_dir}" || true
 
 # Экспортируем переменные окружения для Vikunja
 export VIKUNJA_DATABASE_TYPE="mysql"
-export VIKUNJA_DATABASE_HOST="${db_host}"
+export VIKUNJA_DATABASE_HOST=$(bashio::services "mysql" "host")
 export VIKUNJA_DATABASE_USER="${db_user}"
 export VIKUNJA_DATABASE_PASSWORD="${db_pass}"
 export VIKUNJA_DATABASE_DATABASE="${db_name}"
@@ -29,4 +29,4 @@ export VIKUNJA_SERVICE_ENABLEREGISTRATION="$([ "${allow_register}" = "true" ] &&
 export VIKUNJA_FILES_BASEPATH="${files_dir}"
 
 # Запускаем основной бинарь
-exec /app/vikunja/vikunja
+exec /opt/vikunja/vikunja

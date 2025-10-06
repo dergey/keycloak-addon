@@ -15,7 +15,6 @@
   "ports": { "3456/tcp": null },
   "map": ["data:rw"],
   "options": {
-    "db_host": "core-mariadb",
     "db_user": "vikunja",
     "db_password": "supersecret",
     "db_name": "vikunja",
@@ -23,7 +22,6 @@
     "allow_register": true
   },
   "schema": {
-    "db_host": "str",
     "db_user": "str",
     "db_password": "str",
     "db_name": "str",

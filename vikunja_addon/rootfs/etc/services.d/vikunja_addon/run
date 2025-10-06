@@ -4,7 +4,8 @@
 bashio::log.info "Starting Vikunja..."
 
 # Читаем параметры из config.json
-db_host=$(bashio::config 'db_host')
+db_host=$(bashio::services "mysql" "host")
+db_port=$(bashio::services "mysql" "port")
 db_user=$(bashio::config 'db_user')
 db_pass=$(bashio::config 'db_password')
 db_name=$(bashio::config 'db_name')
@@ -18,7 +19,8 @@ chown -R 1000 "${files_dir}" || true
 
 # Экспортируем переменные окружения для Vikunja
 export VIKUNJA_DATABASE_TYPE="mysql"
-export VIKUNJA_DATABASE_HOST=$(bashio::services "mysql" "host")
+export VIKUNJA_DATABASE_HOST="${db_host}"
+export VIKUNJA_DATABASE_PORT="${db_port}"
 export VIKUNJA_DATABASE_USER="${db_user}"
 export VIKUNJA_DATABASE_PASSWORD="${db_pass}"
 export VIKUNJA_DATABASE_DATABASE="${db_name}"

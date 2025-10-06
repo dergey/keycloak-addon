@@ -12,15 +12,15 @@ COPY rootfs /
 # Поэтому используем официальный бинарь из релизов или curl; здесь — вариант с apk и wget.
 
 # Установим необходимые инструменты
-RUN apk add --no-cache curl bash tzdata
+RUN apk add --no-cache unzip curl bash tzdata
 
 # Получаем последнюю стабильную сборку Vikunja (можно зафиксировать версию)
 # Пример: скачивание готового tar.gz с сервером и фронтом; при необходимости адаптируй версию.
 # Ниже — placeholder; в реальном проекте лучше зафиксировать конкретную версию.
 RUN mkdir -p /opt/vikunja \
- && curl -L https://dl.vikunja.io/vikunja/vikunja-linux-amd64.tar.gz -o /tmp/vikunja.tar.gz \
- && tar -xzf /tmp/vikunja.tar.gz -C /opt/vikunja \
- && rm /tmp/vikunja.tar.gz \
+ && curl -L https://dl.vikunja.io/vikunja/v0.24.6/vikunja-v0.24.6-linux-amd64-full.zip -o /tmp/vikunja.zip \
+ && unzip /tmp/vikunja.zip -d /opt/vikunja \
+ && rm /tmp/vikunja.zip \
  && chmod +x /opt/vikunja/vikunja
 
 # Ensure all run scripts are executable

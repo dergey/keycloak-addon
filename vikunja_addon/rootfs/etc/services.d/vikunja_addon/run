@@ -1,9 +1,14 @@
-#!/usr/bin/env bashio
-# Важно: bashio автоматически доступен в аддонах HA
+#!/usr/bin/with-contenv bashio
 
 bashio::log.info "Starting Vikunja..."
 
-# Читаем параметры из config.json
+# Wait for MariaDB
+bashio::log.info "Looking for MariaDB..."
+if ! bashio::services.available 'mysql'; then
+    bashio::log.fatal "Local database access should be provided by the MariaDB addon"
+    bashio::exit.nok "Please ensure it is installed and started"
+fi
+
 db_host=$(bashio::services "mysql" "host")
 db_port=$(bashio::services "mysql" "port")
 db_user=$(bashio::config 'db_user')
@@ -12,12 +17,10 @@ db_name=$(bashio::config 'db_name')
 jwt_secret=$(bashio::config 'jwt_secret')
 allow_register=$(bashio::config 'allow_register')
 
-# Каталог для файлов
 files_dir="/data/files"
 mkdir -p "${files_dir}"
 chown -R 1000 "${files_dir}" || true
 
-# Экспортируем переменные окружения для Vikunja
 export VIKUNJA_DATABASE_TYPE="mysql"
 export VIKUNJA_DATABASE_HOST="${db_host}"
 export VIKUNJA_DATABASE_PORT="${db_port}"
@@ -30,5 +33,4 @@ export VIKUNJA_SERVICE_PUBLICURL="/"
 export VIKUNJA_SERVICE_ENABLEREGISTRATION="$([ "${allow_register}" = "true" ] && echo "true" || echo "false")"
 export VIKUNJA_FILES_BASEPATH="${files_dir}"
 
-# Запускаем основной бинарь
 exec /opt/vikunja/vikunja

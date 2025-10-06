@@ -4,6 +4,8 @@ FROM $BUILD_FROM
 # Copy root filesystem
 COPY rootfs /
 
+RUN chmod +x /etc/services.d/vikunja_addon/finish
+
 # Устанавливаем Vikunja (официальный образ как источник)
 # Можно пойти двумя путями:
 # 1) Прямо использовать vikunja/vikunja как базовый (но лучше унифицировать с базовым образом add-on)

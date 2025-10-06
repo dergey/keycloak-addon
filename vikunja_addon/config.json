@@ -13,7 +13,7 @@
   "panel_icon": "mdi:format-list-checkbox",
   "panel_title": "Vikunja",
   "ports": { "3456/tcp": null },
-  "map": ["data:rw"],
+  "map": ["ssl", "data:rw"],
   "options": {
     "db_user": "vikunja",
     "db_password": "supersecret",
@@ -33,7 +33,5 @@
     "amd64": "ghcr.io/home-assistant/amd64-base:latest",
     "aarch64": "ghcr.io/home-assistant/aarch64-base:latest",
     "armv7": "ghcr.io/home-assistant/armv7-base:latest"
-  },
-  "homeassistant_api": true,
-  "auth_api": true
+  }
 }

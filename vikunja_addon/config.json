@@ -31,6 +31,5 @@
     "db_name": "str",
     "jwt_secret": "str",
     "allow_register": "bool"
-  },
-  "image": "local/vikunja-addon"
+  }
 }

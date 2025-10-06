@@ -1,6 +1,9 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
+# Copy root filesystem
+COPY rootfs /
+
 # Устанавливаем Vikunja (официальный образ как источник)
 # Можно пойти двумя путями:
 # 1) Прямо использовать vikunja/vikunja как базовый (но лучше унифицировать с базовым образом add-on)

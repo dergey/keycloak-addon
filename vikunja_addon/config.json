@@ -4,7 +4,7 @@
   "slug": "vikunja",
   "description": "Vikunja — менеджер задач, интегрированный в Home Assistant через Ingress",
   "arch": ["amd64", "armv7", "aarch64"],
-  "startup": "services",
+  "startup": "application",
   "boot": "auto",
   "init": false,
   "ingress": true,
@@ -31,5 +31,6 @@
     "db_name": "str",
     "jwt_secret": "str",
     "allow_register": "bool"
-  }
+  },
+  "services": ["mysql:need"]
 }

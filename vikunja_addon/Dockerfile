@@ -19,7 +19,7 @@ RUN apk add --no-cache curl bash tzdata
 # Ниже — placeholder; в реальном проекте лучше зафиксировать конкретную версию.
 RUN mkdir -p /opt/vikunja \
  && curl -L https://dl.vikunja.io/vikunja/vikunja-linux-amd64.tar.gz -o /tmp/vikunja.tar.gz \
- && tar -xzf /tmp/vikunja.tar.gz -C /app/vikunja \
+ && tar -xzf /tmp/vikunja.tar.gz -C /opt/vikunja \
  && rm /tmp/vikunja.tar.gz \
  && chmod +x /opt/vikunja/vikunja
 

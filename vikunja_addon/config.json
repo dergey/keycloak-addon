@@ -12,9 +12,7 @@
   "ingress_entry": "/",
   "panel_icon": "mdi:format-list-checkbox",
   "panel_title": "Vikunja",
-  "ports": {
-    "3456/tcp": null
-  },
+  "ports": { "3456/tcp": null },
   "map": ["data:rw"],
   "options": {
     "db_host": "core-mariadb",
@@ -32,5 +30,10 @@
     "jwt_secret": "str",
     "allow_register": "bool"
   },
-  "services": ["mysql:need"]
+  "services": ["mysql:need"],
+  "build_from": {
+    "amd64": "ghcr.io/home-assistant/amd64-base:latest",
+    "aarch64": "ghcr.io/home-assistant/aarch64-base:latest",
+    "armv7": "ghcr.io/home-assistant/armv7-base:latest"
+  }
 }

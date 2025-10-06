@@ -1,0 +1,32 @@
+#!/usr/bin/env bashio
+# Важно: bashio автоматически доступен в аддонах HA
+
+bashio::log.info "Starting Vikunja..."
+
+# Читаем параметры из config.json
+db_host=$(bashio::config 'db_host')
+db_user=$(bashio::config 'db_user')
+db_pass=$(bashio::config 'db_password')
+db_name=$(bashio::config 'db_name')
+jwt_secret=$(bashio::config 'jwt_secret')
+allow_register=$(bashio::config 'allow_register')
+
+# Каталог для файлов
+files_dir="/data/files"
+mkdir -p "${files_dir}"
+chown -R 1000 "${files_dir}" || true
+
+# Экспортируем переменные окружения для Vikunja
+export VIKUNJA_DATABASE_TYPE="mysql"
+export VIKUNJA_DATABASE_HOST="${db_host}"
+export VIKUNJA_DATABASE_USER="${db_user}"
+export VIKUNJA_DATABASE_PASSWORD="${db_pass}"
+export VIKUNJA_DATABASE_DATABASE="${db_name}"
+
+export VIKUNJA_SERVICE_JWTSECRET="${jwt_secret:-changeme}"
+export VIKUNJA_SERVICE_PUBLICURL="/"
+export VIKUNJA_SERVICE_ENABLEREGISTRATION="$([ "${allow_register}" = "true" ] && echo "true" || echo "false")"
+export VIKUNJA_FILES_BASEPATH="${files_dir}"
+
+# Запускаем основной бинарь
+exec /app/vikunja/vikunja

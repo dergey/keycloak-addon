@@ -1,0 +1,36 @@
+{
+  "name": "Vikunja",
+  "version": "0.1.0",
+  "slug": "vikunja",
+  "description": "Vikunja — менеджер задач, интегрированный в Home Assistant через Ingress",
+  "arch": ["amd64", "armv7", "aarch64"],
+  "startup": "services",
+  "boot": "auto",
+  "init": false,
+  "ingress": true,
+  "ingress_port": 3456,
+  "ingress_entry": "/",
+  "panel_icon": "mdi:format-list-checkbox",
+  "panel_title": "Vikunja",
+  "ports": {
+    "3456/tcp": null
+  },
+  "map": ["data:rw"],
+  "options": {
+    "db_host": "core-mariadb",
+    "db_user": "vikunja",
+    "db_password": "supersecret",
+    "db_name": "vikunja",
+    "jwt_secret": "changeme",
+    "allow_register": true
+  },
+  "schema": {
+    "db_host": "str",
+    "db_user": "str",
+    "db_password": "str",
+    "db_name": "str",
+    "jwt_secret": "str",
+    "allow_register": "bool"
+  },
+  "image": "local/vikunja-addon"
+}

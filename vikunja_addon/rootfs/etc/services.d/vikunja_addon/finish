@@ -1,0 +1,3 @@
+#!/usr/bin/env bashio
+bashio::log.info "Vikunja service stopped"
+exit 0

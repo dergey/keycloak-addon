@@ -1,6 +1,6 @@
 {
   "name": "Vikunja",
-  "version": "0.1.0",
+  "version": "0.24.6",
   "slug": "vikunja",
   "description": "Vikunja — менеджер задач, интегрированный в Home Assistant через Ingress",
   "arch": ["amd64", "armv7", "aarch64"],

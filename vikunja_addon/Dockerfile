@@ -18,7 +18,7 @@ RUN apk add --no-cache unzip curl bash tzdata
 # Пример: скачивание готового tar.gz с сервером и фронтом; при необходимости адаптируй версию.
 # Ниже — placeholder; в реальном проекте лучше зафиксировать конкретную версию.
 RUN mkdir -p /opt/vikunja \
- && curl -L https://dl.vikunja.io/vikunja/v0.24.6/vikunja-v0.24.6-linux-amd64-full.zip -o /tmp/vikunja.zip \
+ && curl -L https://dl.vikunja.io/vikunja/0.24.6/vikunja-v0.24.6-linux-amd64-full.zip -o /tmp/vikunja.zip \
  && unzip /tmp/vikunja.zip -d /opt/vikunja \
  && rm /tmp/vikunja.zip \
  && chmod +x /opt/vikunja/vikunja

@@ -21,6 +21,7 @@ RUN mkdir -p /opt/vikunja \
  && curl -L https://dl.vikunja.io/vikunja/0.24.6/vikunja-v0.24.6-linux-amd64-full.zip -o /tmp/vikunja.zip \
  && unzip /tmp/vikunja.zip -d /opt/vikunja \
  && rm /tmp/vikunja.zip \
+ && mv /opt/vikunja/vikunja-v0.24.6-linux-amd64 /opt/vikunja/vikunja \
  && chmod +x /opt/vikunja/vikunja
 
 # Ensure all run scripts are executable

@@ -7,24 +7,23 @@
   "startup": "application",
   "boot": "auto",
   "init": false,
-  "ingress": true,
-  "ingress_port": 3456,
-  "ingress_entry": "/",
   "panel_icon": "mdi:format-list-checkbox",
   "panel_title": "Vikunja",
-  "ports": { "3456/tcp": null },
+  "ports": { "3456/tcp": 8091 },
   "map": ["ssl", "data:rw"],
   "options": {
     "db_user": "vikunja",
     "db_password": "supersecret",
     "db_name": "vikunja",
-    "jwt_secret": "changeme",
+    "public_url": "http://<the public ip or host where Vikunja is reachable>",
+    "jwt_secret": "<a super secure random secret>",
     "allow_register": true
   },
   "schema": {
     "db_user": "str",
     "db_password": "str",
     "db_name": "str",
+    "public_url": "str",
     "jwt_secret": "str",
     "allow_register": "bool"
   },

@@ -14,6 +14,7 @@ db_port=$(bashio::services "mysql" "port")
 db_user=$(bashio::config 'db_user')
 db_pass=$(bashio::config 'db_password')
 db_name=$(bashio::config 'db_name')
+public_url=$(bashio::config 'public_url')
 jwt_secret=$(bashio::config 'jwt_secret')
 allow_register=$(bashio::config 'allow_register')
 
@@ -27,9 +28,8 @@ export VIKUNJA_DATABASE_PORT="${db_port}"
 export VIKUNJA_DATABASE_USER="${db_user}"
 export VIKUNJA_DATABASE_PASSWORD="${db_pass}"
 export VIKUNJA_DATABASE_DATABASE="${db_name}"
-
 export VIKUNJA_SERVICE_JWTSECRET="${jwt_secret:-changeme}"
-export VIKUNJA_SERVICE_PUBLICURL="/"
+export VIKUNJA_SERVICE_PUBLICURL="${public_url}"
 export VIKUNJA_SERVICE_ENABLEREGISTRATION="$([ "${allow_register}" = "true" ] && echo "true" || echo "false")"
 export VIKUNJA_FILES_BASEPATH="${files_dir}"
 
